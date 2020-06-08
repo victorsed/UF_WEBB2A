@@ -1,0 +1,15 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    form_themes: ['bootstrap_4_layout.html.twig', 'form/label.html.twig']
+    paths:
+        '%kernel.project_dir%/vendor/knplabs/knp-paginator-bundle/templates': KnpPaginator
+    date:
+        format: d/m/Y
+        interval_format: '%%d days'
+        timezone: Europe/Paris
+
+knp_paginator:
+    template:
+        pagination: "others/twitter_bootstrap_v4_pagination.html.twig"

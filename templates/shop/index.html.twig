@@ -1,0 +1,68 @@
+{% extends 'shop/layout.html.twig' %}
+{% block title %}Accueil - VS-GAMING{% endblock title %}
+
+{% block shop_content %}
+
+<section class="new-products">
+    <header class="d-flex flex-column justify-content-center align-items-center my-4">
+        <h2>Les Nouveautés</h2>
+        <div class="line"></div>
+    </header>
+    <div class="row">
+        {% for product in latest_products %}
+            <div class="col-md-4">
+                <article class="product-card card border-0 mb-4">
+                    {% set thumb = product.images|first %}
+                    <div class="image-container">
+                        <a href="/product/{{ product.slug }}">
+                            <img src="/img/upload/{{ thumb.name }}" alt="{{ thumb.description }}" class="product-card__image img img-fluid" style="height: 25rem;object-fit: cover;">
+                        </a>
+                    </div>
+                    <div class="card-body pt-0">
+                        <h4 class="product-card__heading">
+                            <a href="/product/{{ product.slug }}" class="product-card__link">
+                                {{ product.name }}
+                            </a>
+                        </h4>
+                        <div class="divider mb-2"></div>
+                        <div class="product-card__price text-right">{{ product.price }} €</div>
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="all-products">
+    <header class="d-flex flex-column justify-content-center align-items-center my-4">
+        <h2>Tous les produits</h2>
+        <div class="line"></div>
+    </header>
+    <div class="row">
+        {% for product in all_products %}
+            <div class="col-md-4">
+                <article class="product-card card border-0 mb-4">
+                    {% set thumb = product.images|first %}
+                    <div class="image-container">
+                        <a href="/product/{{ product.slug }}">
+                            <img src="/img/upload/{{ thumb.name }}" alt="{{ thumb.description }}" class="product-card__image img img-fluid" style="height: 25rem;object-fit: cover;">
+                        </a>
+                    </div>
+                    <div class="card-body pt-0">
+                        <h4 class="product-card__heading">
+                            <a href="/product/{{ product.slug }}" class="product-card__link">
+                                {{ product.name }}
+                            </a>
+                        </h4>
+                        <div class="divider mb-2"></div>
+                        <div class="product-card__price text-right">{{ product.price }} €</div>
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+        <br>
+        {{ knp_pagination_render(all_products) }}
+    </div>
+</section>
+
+{% endblock %}

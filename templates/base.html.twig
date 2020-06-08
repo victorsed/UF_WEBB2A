@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}VS-GAMING{% endblock %}</title>
+        <meta name="viewport" content="width=device-width initial-scale=1.0">
+        <meta name="description" content="E-commerce">
+        <link rel="icon" href="/img/logo1.png" />
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700" rel="stylesheet">
+        <link rel="stylesheet" href="/build/app.css">
+        <script src="/build/app.js"></script>
+        {% block stylesheets %}
+        {% endblock %}
+    </head>
+    <body class="">
+        <header class="top-header bg-white">
+            <nav class="top-nav navbar navbar-dark bg-dark">
+                <a href="{{ path('index') }}" class="navbar-brand"><img class="fit-picture" src="/img/logo5.png"></a>
+                
+                <div class="nav-right d-flex mx-2">
+                    <div class="dropdown mr-4">
+                        <i class="fas fa-users-cog"></i>
+                        <div class="dropdown-menu">
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <a href="{{ path('user_account') }}" class="dropdown-item">Mon compte</a>
+                            {% else %}
+                                <a href="{{ path('user_welcome') }}" class="dropdown-item">Connexion</a>
+                                <a href="{{ path('user_welcome') }}" class="dropdown-item">Nouveau compte</a>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="dropdown-item" href="{{ path('admin_index') }}">Administration</a>
+                            {% endif %}
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <a class="dropdown-item" href="{{ path('security_logout' )}}">Déconnexion</a>
+                            {% endif %}
+                        </div>
+                    </div>
+              
+                    <a class="basket-link mx-2" href="{{ path('basket_show') }}">
+                        <i class="fas fa-cart-arrow-down"></i>
+                        <div class="basket-count d-flex justify-content-center align-items-center">
+                            <span class="text-white">
+                                {{ render(controller('App\\Controller\\BasketController::productCount')) }}
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </nav>
+        </header>
+        
+        
+        {% block breadcrumb %}{% endblock breadcrumb %}
+
+        {% if app.session.flashbag.peekAll is not empty %}
+            <div class="flash container mt-2" id="flash">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                            <span class="font-weight-bold">{{ message }}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+
+        <footer class="footer mt-5">
+            <div class="footer__upper py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md">
+                            <p>Retrouvez nous sur:</p>
+                            <ul class="d-flex flex-row social-icons p-0">
+                                <li class="mx-1 border">
+                                    <a href="#" class="social-link d-flex justify-content-center align-items-center">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="mx-1 border">
+                                    <a href="#" class="social-link d-flex justify-content-center align-items-center">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li class="mx-1 border">
+                                    <a href="#" class="social-link d-flex justify-content-center align-items-center">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-lower bg-dark">
+                <div class="container d-flex justify-content-between align-items-center border-top">
+                    <span class="p-4 text-white">Copyright © 2020 Sedaros Victor / Lacombe Samy - YNOV</span>
+                </div>
+            </div>
+            {% block footer %}{% endblock %}
+        </footer>
+        <script src="/js/flash.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
